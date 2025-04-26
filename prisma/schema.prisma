@@ -1,0 +1,65 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  name       String
+  email      String       @unique
+  password   String
+  clients    Client[]
+  reminders  Reminder[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model Client {
+  id              Int              @id @default(autoincrement())
+  name            String
+  email           String?          @unique
+  phone           String?
+  userId          Int
+  user            User             @relation(fields: [userId], references: [id])
+  projects        Project[]
+  interactionLogs InteractionLog[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Project {
+  id        Int      @id @default(autoincrement())
+  name      String
+  details   String?
+  clientId  Int
+  client    Client   @relation(fields: [clientId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InteractionLog {
+  id        Int      @id @default(autoincrement())
+  content   String
+  date      DateTime @default(now())
+  clientId  Int
+  client    Client   @relation(fields: [clientId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reminder {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  dueDate     DateTime
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
