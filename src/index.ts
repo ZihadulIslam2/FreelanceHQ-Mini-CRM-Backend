@@ -5,6 +5,7 @@ import clientRoutes from './routes/clientRoutes'
 import projectRoutes from './routes/projectRoutes'
 import interactionLogRoutes from './routes/interactionLogRoutes'
 import reminderRoutes from './routes/reminderRoutes'
+import dashboardRoutes from './routes/dashboardRoutes'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -19,6 +20,7 @@ app.use('/clients', clientRoutes)
 app.use('/clients/:clientId/projects', projectRoutes)
 app.use('/interaction-logs', interactionLogRoutes)
 app.use('/reminders', reminderRoutes)
+app.use('/dashboard', dashboardRoutes)
 
 const PORT = process.env.PORT || 5000
 
