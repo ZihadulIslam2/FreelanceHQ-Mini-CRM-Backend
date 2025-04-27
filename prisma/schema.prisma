@@ -33,14 +33,21 @@ model Client {
   updatedAt       DateTime         @updatedAt
 }
 
+enum ProjectStatus {
+  not_started
+  in_progress
+  completed
+}
+
 model Project {
-  id        Int      @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   name      String
   details   String?
+  status    ProjectStatus @default(not_started)
   clientId  Int
-  client    Client   @relation(fields: [clientId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  client    Client        @relation(fields: [clientId], references: [id])
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 model InteractionLog {
