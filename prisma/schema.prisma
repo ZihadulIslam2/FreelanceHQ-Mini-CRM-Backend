@@ -50,14 +50,21 @@ model Project {
   updatedAt DateTime      @updatedAt
 }
 
+enum InteractionType {
+  call
+  meeting
+  email
+}
+
 model InteractionLog {
-  id        Int      @id @default(autoincrement())
-  content   String
-  date      DateTime @default(now())
-  clientId  Int
-  client    Client   @relation(fields: [clientId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int              @id @default(autoincrement())
+  content         String
+  date            DateTime         @default(now())
+  interactionType InteractionType
+  clientId        Int
+  client          Client           @relation(fields: [clientId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 model Reminder {
